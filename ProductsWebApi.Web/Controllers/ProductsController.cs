@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductsWebApi.Web.Contracts;
+using ProductsWebApi.Web.Facades.Products;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProductsWebApi.Web.Controllers
 {
@@ -20,14 +22,24 @@ namespace ProductsWebApi.Web.Controllers
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class ProductsController : ControllerBase
     {
+        private readonly IProductFacade _productFacade;
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="customerFacade">Facade providing operations on products.</param>
+        public ProductsController(IProductFacade customerFacade)
+        {
+            _productFacade = customerFacade;
+        }
+
         /// <summary>
         /// Returns all product.
         /// </summary>
         /// <returns>List of all products.</returns>
         [HttpGet]
-        public ActionResult<List<Product>> Get()
+        public async Task<ActionResult<List<Product>>> GetProductsAsync()
         {
-            return Ok();
+            return Ok(await _productFacade.GetAllAsync());
         }
 
         /// <summary>
@@ -38,9 +50,9 @@ namespace ProductsWebApi.Web.Controllers
         /// <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Product> Get(Guid id)
+        public async Task<ActionResult<Product>> GetProductAsync(Guid id)
         {
-            return Ok();
+            return Ok(await _productFacade.GetAsync(id));
         }
 
         /// <summary>
@@ -52,8 +64,9 @@ namespace ProductsWebApi.Web.Controllers
         /// <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult UpdateDescription(Guid id, ProductUpdate product)
+        public async Task<ActionResult> UpdateDescriptionAsync(Guid id, ProductUpdate product)
         {
+            await _productFacade.UpdateAsync(id, product);
             return Ok();
         }
     }
