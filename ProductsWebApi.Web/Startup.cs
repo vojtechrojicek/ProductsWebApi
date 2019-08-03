@@ -26,13 +26,13 @@ namespace ProductsWebApi.Web
                 => options.UseSqlServer(Configuration.GetConnectionString("ProductsConnection")));
             services.AddCustomizedAutoMapper();
             services.AddCustomizedServices();
+            services.AddApiVersioning();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
             app.UseCustomizedExceptionHandling();
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

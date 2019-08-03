@@ -53,9 +53,10 @@ namespace ProductsWebApi.Web.Middlewares
             {
                 SetResponseType(context, ex, StatusCodes.Status404NotFound);
             }
-            catch when (!context.Response.HasStarted && IsSuccessStatusCode(context.Response.StatusCode))
+            catch (Exception ex) when (!context.Response.HasStarted && IsSuccessStatusCode(context.Response.StatusCode))
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
