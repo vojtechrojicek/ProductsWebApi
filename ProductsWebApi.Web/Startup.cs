@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProductsWebApi.Data;
 using ProductsWebApi.Web.Extensions;
+using ProductsWebApi.Web.Middlewares;
 
 namespace ProductsWebApi.Web
 {
@@ -30,6 +31,7 @@ namespace ProductsWebApi.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCustomizedExceptionHandling();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
