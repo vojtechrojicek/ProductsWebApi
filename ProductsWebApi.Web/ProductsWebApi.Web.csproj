@@ -16,4 +16,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProductsWebApi.Data\ProductsWebApi.Data.csproj" />
+  </ItemGroup>
+
 </Project>
