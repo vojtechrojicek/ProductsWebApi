@@ -57,7 +57,7 @@ namespace ProductsWebApi.Web.Facades.Products
             ProductDb product = _dbContext.Products.FirstOrDefault(x => x.Id == id);
             if (product is null)
             {
-                throw new NotFoundException("Product has not been found!");
+                throw new NotFoundException("Product has not been found.");
             }
 
             return product;
