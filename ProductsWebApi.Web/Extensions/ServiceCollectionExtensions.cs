@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProductsWebApi.Data;
 using ProductsWebApi.Web.Facades.Products;
 using ProductsWebApi.Web.Mappers;
 using Swashbuckle.AspNetCore.Swagger;
@@ -59,6 +62,30 @@ namespace ProductsWebApi.Web.Extensions
                 string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add DbContext to IoC.
+        /// </summary>
+        /// <param name="services">Service collection where DbContext is registered.</param>
+        /// <param name="configuration">Configurate between usind InMemoryProvider (default) and SQLProvider</param>
+        /// <returns>Returns input <paramref name="services"/>.</returns>
+        public static IServiceCollection AddCustomizedDbContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            bool useSqlProvider = configuration.GetValue<bool>("UseSqlProvider");
+
+            if (useSqlProvider)
+            {
+                services.AddDbContext<ProductsWebApiContext>(options
+                    => options.UseSqlServer(configuration.GetConnectionString("ProductsConnection")));
+            }
+            else
+            {
+                services.AddDbContext<ProductsWebApiContext>(options
+                    => options.UseInMemoryDatabase("ProductsWebApi"));
+            }
 
             return services;
         }

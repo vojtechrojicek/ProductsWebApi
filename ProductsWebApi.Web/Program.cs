@@ -26,7 +26,10 @@ namespace ProductsWebApi.Web
                 try
                 {
                     ProductsWebApiContext context = scope.ServiceProvider.GetService<ProductsWebApiContext>();
-                    context.Database.Migrate();
+                    if (context.Database.IsSqlServer())
+                    {
+                        context.Database.Migrate();
+                    }
 
                     ProductsWebApiInitializer.Initialize(context);
                 }

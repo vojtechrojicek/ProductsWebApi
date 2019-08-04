@@ -95,6 +95,14 @@
             <param name="services">Service collection where Swagger is registered.</param>
             <returns>Returns input <paramref name="services"/>.</returns>
         </member>
+        <member name="M:ProductsWebApi.Web.Extensions.ServiceCollectionExtensions.AddCustomizedDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add DbContext to IoC.
+            </summary>
+            <param name="services">Service collection where DbContext is registered.</param>
+            <param name="configuration">Configurate between usind InMemoryProvider (default) and SQLProvider</param>
+            <returns>Returns input <paramref name="services"/>.</returns>
+        </member>
         <member name="T:ProductsWebApi.Web.Facades.Products.IProductFacade">
             <summary>
             Interface which describe facade used in ProductsController/>.

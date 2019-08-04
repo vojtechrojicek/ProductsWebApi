@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProductsWebApi.Data;
 using ProductsWebApi.Web.Extensions;
 using ProductsWebApi.Web.Middlewares;
 
@@ -35,8 +33,7 @@ namespace ProductsWebApi.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<ProductsWebApiContext>(options
-                => options.UseSqlServer(Configuration.GetConnectionString("ProductsConnection")));
+            services.AddCustomizedDbContext(Configuration);
             services.AddCustomizedAutoMapper();
             services.AddCustomizedServices();
             services.AddCustomizedSwagger();
