@@ -4,7 +4,6 @@ using ProductsWebApi.Web.Contracts;
 using ProductsWebApi.Web.Facades.Products;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ProductsWebApi.Web.Controllers
 {
@@ -37,9 +36,9 @@ namespace ProductsWebApi.Web.Controllers
         /// </summary>
         /// <returns>List of all products.</returns>
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProductsAsync()
+        public ActionResult<List<Product>> GetProducts()
         {
-            return Ok(await _productFacade.GetAllAsync());
+            return Ok(_productFacade.GetAll());
         }
 
         /// <summary>
@@ -50,9 +49,9 @@ namespace ProductsWebApi.Web.Controllers
         /// <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> GetProductAsync(Guid id)
+        public ActionResult<Product> GetProduct(Guid id)
         {
-            return Ok(await _productFacade.GetAsync(id));
+            return Ok(_productFacade.Get(id));
         }
 
         /// <summary>
@@ -64,9 +63,9 @@ namespace ProductsWebApi.Web.Controllers
         /// <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateDescriptionAsync(Guid id, ProductUpdate product)
+        public ActionResult UpdateDescription(Guid id, ProductUpdate product)
         {
-            await _productFacade.UpdateAsync(id, product);
+            _productFacade.Update(id, product);
             return Ok();
         }
     }

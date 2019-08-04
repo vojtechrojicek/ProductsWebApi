@@ -1,25 +1,55 @@
-﻿using ProductsWebApi.Web.Contracts;
+﻿using AutoMapper;
+using ProductsWebApi.Data;
+using ProductsWebApi.Web.Contracts;
+using ProductsWebApi.Web.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
+using ProductDb = ProductsWebApi.Data.Entities.Product;
+
 
 namespace ProductsWebApi.Web.Facades.Products
 {
     public class ProductFacade : IProductFacade
     {
-        public Task<Product> GetAsync(Guid id)
+        private readonly ProductsWebApiContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public ProductFacade(ProductsWebApiContext dbContext, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public Task<IList<Product>> GetAllAsync()
+        public Product Get(Guid id)
         {
-            throw new NotImplementedException();
+            ProductDb product = GetSingle(id);
+            return _mapper.Map<Product>(product);
         }
 
-        public Task UpdateAsync(Guid id, ProductUpdate model)
+        public List<Product> GetAll()
         {
-            throw new NotImplementedException();
+            var products = _dbContext.Products.ToList();
+            return _mapper.Map<List<ProductDb>, List<Product>>(products);
+        }
+
+        public void Update(Guid id, ProductUpdate model)
+        {
+            ProductDb product = GetSingle(id);
+            product.Description = model.Description;
+
+            _dbContext.SaveChanges();
+        }
+
+        private ProductDb GetSingle(Guid id)
+        {
+            ProductDb product = _dbContext.Products.FirstOrDefault(x => x.Id == id);
+            if (product is null)
+            {
+                throw new NotFoundException("Product has not been found!");
+            }
+
+            return product;
         }
     }
 }
