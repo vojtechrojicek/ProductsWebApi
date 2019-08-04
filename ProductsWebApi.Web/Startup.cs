@@ -9,16 +9,29 @@ using ProductsWebApi.Web.Middlewares;
 
 namespace ProductsWebApi.Web
 {
+    /// <summary>
+    /// Startup.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="configuration">Application configuration.</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Application configuration.
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configure IoC container.
+        /// </summary>
+        /// <param name="services">Service.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -26,13 +39,18 @@ namespace ProductsWebApi.Web
                 => options.UseSqlServer(Configuration.GetConnectionString("ProductsConnection")));
             services.AddCustomizedAutoMapper();
             services.AddCustomizedServices();
+            services.AddCustomizedSwagger();
             services.AddApiVersioning();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Configure web api pipeline.
+        /// </summary>
+        /// <param name="app">Application builder.</param>
         public void Configure(IApplicationBuilder app)
         {
             app.UseCustomizedExceptionHandling();
+            app.UseCustomizedSwagger();
             app.UseMvc();
         }
     }

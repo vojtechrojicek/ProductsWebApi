@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ProductsWebApi.Web.Middlewares
 {
     /// <summary>
-    /// Middleware handles erros and sends exception to client.
+    /// Middleware handles errors and sends exception to client.
     /// </summary>
     public class ErrorHandlingMiddleware
     {
@@ -99,8 +99,16 @@ namespace ProductsWebApi.Web.Middlewares
         }
     }
 
+    /// <summary>
+    /// Extension for registering ExceptionHandlingMiddleware.
+    /// </summary>
     public static class ExceptionHandlingMiddlewareExtensions
     {
+        /// <summary>
+        /// Add ExceptionHandlingMiddleware to pipeline.
+        /// </summary>
+        /// <param name="builder">Application builder.</param>
+        /// <returns>Application builder with ExceptionHandlingMiddleware.</returns>
         public static IApplicationBuilder UseCustomizedExceptionHandling(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<ErrorHandlingMiddleware>();

@@ -8,8 +8,15 @@ using System;
 
 namespace ProductsWebApi.Web
 {
+    /// <summary>
+    /// Startup class.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Application entry.
+        /// </summary>
+        /// <param name="args">Arguments.</param>
         public static void Main(string[] args)
         {
             IWebHost host = CreateWebHostBuilder(args).Build();
@@ -33,6 +40,10 @@ namespace ProductsWebApi.Web
             host.Run();
         }
 
+        /// <summary>
+        /// Create web host builder.
+        /// </summary>
+        /// <param name="args">Arguments.</param>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();

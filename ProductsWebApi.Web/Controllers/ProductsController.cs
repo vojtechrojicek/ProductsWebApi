@@ -46,7 +46,7 @@ namespace ProductsWebApi.Web.Controllers
         /// </summary>
         /// <param name="id">Id of the product.</param>        
         /// <returns>Requested product.</returns>
-        /// <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
+        /// <response code="404">If product with <paramref name="id"/> doesn't exist.</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Product> GetProduct(Guid id)
@@ -60,7 +60,7 @@ namespace ProductsWebApi.Web.Controllers
         /// <param name="id">Id of the product.</param>
         /// <param name="product">Data for updating product.</param>
         /// <response code="200">Updated.</response>
-        /// <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
+        /// <response code="404">If product with <paramref name="id"/> doesn't exist.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult UpdateDescription(Guid id, ProductUpdate product)

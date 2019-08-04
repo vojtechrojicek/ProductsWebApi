@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProductsWebApi.Web</name>
+    </assembly>
+    <members>
+        <member name="T:ProductsWebApi.Web.Controllers.ProductsController">
+            <summary>
+            Products controller.
+            </summary>
+            <response code="200">Ok.</response>
+            <response code="400">Incorrect request. Check response message for more details.</response>
+            <response code="500">Unexpected error occurred.</response>
+        </member>
+        <member name="M:ProductsWebApi.Web.Controllers.ProductsController.#ctor(ProductsWebApi.Web.Facades.Products.IProductFacade)">
+            <summary>
+            Ctor.
+            </summary>
+            <param name="customerFacade">Facade providing operations on products.</param>
+        </member>
+        <member name="M:ProductsWebApi.Web.Controllers.ProductsController.GetProducts">
+            <summary>
+            Returns all product.
+            </summary>
+            <returns>List of all products.</returns>
+        </member>
+        <member name="M:ProductsWebApi.Web.Controllers.ProductsController.GetProduct(System.Guid)">
+            <summary>
+            Returns product by id.
+            </summary>
+            <param name="id">Id of the product.</param>        
+            <returns>Requested product.</returns>
+            <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
+        </member>
+        <member name="M:ProductsWebApi.Web.Controllers.ProductsController.UpdateDescription(System.Guid,ProductsWebApi.Web.Contracts.ProductUpdate)">
+            <summary>
+            Updates product data specified by id.
+            </summary>
+            <param name="id">Id of the product.</param>
+            <param name="product">Data for updating product.</param>
+            <response code="200">Updated.</response>
+            <response code="404">If product with id <paramref name="id"/> doesn't exist.</response>
+        </member>
+        <member name="T:ProductsWebApi.Web.Exceptions.NotFoundException">
+            <summary>
+            Exception is thrown when resource is not found.
+            </summary>
+        </member>
+        <member name="M:ProductsWebApi.Web.Exceptions.NotFoundException.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:ProductsWebApi.Web.Exceptions.NotFoundException"/> class.
+            </summary>
+        </member>
+        <member name="M:ProductsWebApi.Web.Exceptions.NotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:ProductsWebApi.Web.Exceptions.NotFoundException" /> class.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
+        <member name="T:ProductsWebApi.Web.Middlewares.ErrorHandlingMiddleware">
+            <summary>
+            Middleware handles erros and sends exception to client.
+            </summary>
+        </member>
+        <member name="M:ProductsWebApi.Web.Middlewares.ErrorHandlingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{ProductsWebApi.Web.Middlewares.ErrorHandlingMiddleware})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="next">Delegate for next middleware.</param>
+            <param name="logger">Logger.</param>
+        </member>
+        <member name="M:ProductsWebApi.Web.Middlewares.ErrorHandlingMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invoke.
+            </summary>
+            <param name="context">Current http context.</param>
+        </member>
+    </members>
+</doc>
